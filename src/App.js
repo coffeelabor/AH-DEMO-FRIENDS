@@ -11,7 +11,8 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <Route path="/login" component={Login} />
+      <Route path="/login" render={props => <Login {...props} />} /> //
+      component={Login} />
       <PrivateRoute exact path="/" component={Unlocked} />
       <PrivateRoute path="/fishfriends" component={Friends} />
     </div>

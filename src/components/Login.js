@@ -7,9 +7,11 @@ import { login } from "./actions/actions";
 
 class Login extends React.Component {
   state = {
-    username: "",
-    password: "",
-    email: ""
+    creds: {
+      username: "",
+      password: ""
+      // email: ""
+    }
   };
   render() {
     return (
@@ -20,7 +22,7 @@ class Login extends React.Component {
             <Input
               placeholder="username"
               name="username"
-              value={this.state.username}
+              value={this.state.creds.username}
               onChange={this.handleChanges}
               className={
                 this.props.error === true ? "error login-input" : "login-input"
@@ -34,7 +36,7 @@ class Login extends React.Component {
               type="password"
               placeholder="password"
               name="password"
-              value={this.state.password}
+              value={this.state.creds.password}
               onChange={this.handleChanges}
               className={
                 this.props.error === true ? "error login-input" : "login-input"
@@ -67,12 +69,20 @@ class Login extends React.Component {
   handleChanges = e => {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value
+      ...this.state,
+      creds: {
+        ...this.state.creds,
+        [e.target.name]: e.target.value
+      }
     });
   };
 
-  login = () => {
+  login = e => {
     // How do we login?!
+    e.preventDefault();
+    this.props.login(this.state.creds).then(() => {
+      this.props.history.push("/");
+    });
   };
 }
 

@@ -19,6 +19,25 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     // Our reducer needs some code!
+    case LOGIN_START:
+      return {
+        ...state,
+        loggingIn: true,
+        error: false
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loggingIn: false,
+        error: false,
+        token: localStorage.getItem("token")
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        loggingIn: false,
+        error: action.payload
+      };
     default:
       return state;
   }
